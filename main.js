@@ -48,6 +48,8 @@ const displayTransactions = function () {
         </div>`;
     containerTransactions.insertAdjacentHTML("afterbegin", htmls);
   });
+  //resetting the form
+  clearform();
 };
 
 displayTransactions();
@@ -58,29 +60,24 @@ button.addEventListener("click", function (e) {
   const detail = messageInpurEle.value;
   const amount = Number(amountInputEle.value);
   const color = colorPickerEle.value;
-
-  //getting the rasio button value
   let radioEleValue = document.querySelector(
     'input[name="radio"]:checked'
   ).value;
-  if (radioEleValue == "deposit") {
-    dothis(amount, color, detail);
-  } else if (radioEleValue == "withdraw") {
-    dothis(-amount, color, detail);
-  }
-
   //form validation
-  if (!detail || !amount || !radioEleValue) {
+  if (!detail || !amount || !radioEleValue || amount <= 0) {
     console.log(detail, amount, color);
-    errorMsgElem.textContent = "Please fill all fields";
+    errorMsgElem.textContent = "Please fill all fields correctly";
     errorMsgElem.classList.remove("hidden");
   } else {
     errorMsgElem.classList.add("hidden");
+    //getting the radio button value
+
+    if (radioEleValue == "deposit") {
+      dothis(amount, color, detail);
+    } else if (radioEleValue == "withdraw") {
+      dothis(-amount, color, detail);
+    }
   }
-  //resetting the form
-  messageInpurEle.value = "";
-  amountInputEle.value = "";
-  colorPickerEle.value = "#000000";
 });
 
 function dothis(amount, color, detail) {
@@ -104,5 +101,17 @@ let balance = function () {
     sum += transaction["amount"];
   });
   labelBalance.textContent = `$${sum}`;
+  if (sum < 0) {
+    labelBalance.classList.remove("positive");
+    labelBalance.classList.add("negative");
+  } else {
+    labelBalance.classList.remove("negative");
+    labelBalance.classList.add("positive");
+  }
 };
 balance();
+function clearform() {
+  messageInpurEle.value = "";
+  amountInputEle.value = "";
+  colorPickerEle.value = "#000000";
+}

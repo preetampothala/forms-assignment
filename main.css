@@ -138,6 +138,12 @@ textarea {
   margin: 1rem auto;
   text-align: left;
 }
+.positive {
+  color: green;
+}
+.negative {
+  color: red;
+}
 /* textarea:invalid {
   border: 2px dashed red;
 } */
