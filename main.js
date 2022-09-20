@@ -31,8 +31,11 @@ for (let i = 0; i < radioEle.length; i++) {
 
 //function to display the transactions
 const displayTransactions = function () {
+  //clearing the container before displaying the transactions
   containerTransactions.innerHTML = "";
+  //looping through the transactionsArray json
   transactionsArray.forEach(function (transaction, index) {
+    //creating the html elements
     const htmls = `<div class="transactions-row">
         <div class="transactions-type ${
           transaction["color"] != "#000000"
@@ -48,10 +51,10 @@ const displayTransactions = function () {
         </div>`;
     containerTransactions.insertAdjacentHTML("afterbegin", htmls);
   });
-  //resetting the form
+  //resetting the form inputs after the button click event
   clearform();
 };
-
+// displaying the transactions on page load
 displayTransactions();
 
 //button event listener on click to modify the transactions array with the new transaction details
@@ -86,6 +89,7 @@ function dothis(amount, color, detail) {
     transaction["amount"] = amount;
     transaction["detail"] = detail;
     transaction["color"] = color;
+    //pushing the transaction object to the transactionsArray
     transactionsArray.push(transaction);
     displayTransactions();
     console.log(transactionsArray);
@@ -109,7 +113,9 @@ let balance = function () {
     labelBalance.classList.add("positive");
   }
 };
+// calculating the balance on page load
 balance();
+
 function clearform() {
   messageInpurEle.value = "";
   amountInputEle.value = "";
